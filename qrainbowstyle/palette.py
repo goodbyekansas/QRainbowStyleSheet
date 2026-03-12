@@ -160,6 +160,8 @@ class QDarkStyle(BasePalette):
 
 
 class DarkOrange(BasePalette):
+    """A dark theme with orange accents."""
+
     COLOR_BACKGROUND_1 = Gray.B10
     COLOR_BACKGROUND_2 = Gray.B20
     COLOR_BACKGROUND_3 = Gray.B30
@@ -182,7 +184,34 @@ class DarkOrange(BasePalette):
     TITLE_BAR_BUTTONS_HOVER_COLOR = COLOR_ACCENT_4
     TITLE_BAR_BUTTONS_DISABLED_COLOR = COLOR_ACCENT_1
     TITLE_BAR_TEXT_COLOR = COLOR_TEXT_1
+    OPACITY_TOOLTIP = 230
 
+
+class GBK(BasePalette):
+    """A dark theme with a brown background and orange accents.
+    """
+    COLOR_BACKGROUND_1 = "#14130a"
+    COLOR_BACKGROUND_2 = "#1f1d15"
+    COLOR_BACKGROUND_3 = "#2a2820"
+    COLOR_BACKGROUND_4 = "#35322b"
+    COLOR_BACKGROUND_5 = "#403d36"
+    COLOR_BACKGROUND_6 = "#4b4841"
+
+    COLOR_TEXT_1 = "#f4f4f4"
+    COLOR_TEXT_2 = "#d9d9d9"
+    COLOR_TEXT_3 = "#bfbfbf"
+    COLOR_TEXT_4 = "#a6a6a6"
+
+    COLOR_ACCENT_1 = "#a93e2b"
+    COLOR_ACCENT_2 = "#bf4833"
+    COLOR_ACCENT_3 = "#d5523c"
+    COLOR_ACCENT_4 = "#da6b57"
+    COLOR_ACCENT_5 = "#e08573"
+
+    TITLE_BAR_BACKGROUND_COLOR = COLOR_ACCENT_3
+    TITLE_BAR_BUTTONS_HOVER_COLOR = COLOR_ACCENT_4
+    TITLE_BAR_BUTTONS_DISABLED_COLOR = COLOR_ACCENT_1
+    TITLE_BAR_TEXT_COLOR = COLOR_TEXT_1
     OPACITY_TOOLTIP = 230
 
 
@@ -268,6 +297,8 @@ class QDarkStyle3(BasePalette):
 
 
 class PWRDark(BasePalette):
+    """A dark theme with orange accents."""
+
     COLOR_BACKGROUND_1 = Gray.B10
     COLOR_BACKGROUND_2 = Gray.B20
     COLOR_BACKGROUND_3 = Gray.B30

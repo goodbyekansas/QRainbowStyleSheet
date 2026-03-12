@@ -1,6 +1,9 @@
 Changelog
 =========
 
+- 0.9.8
+    - Add new palettes: GBK
+
 - 0.9.7
     - Add support for py 3.10
     - Add support for PySide6

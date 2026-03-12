@@ -182,6 +182,7 @@ Available styles
 Currently available styles are:
 
 * Oceanic
+* GBK
 * QDarkStyle3
 * QDarkstyle3Light
 * LightOrange
