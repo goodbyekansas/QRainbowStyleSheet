@@ -4,5 +4,3 @@
 setuptools
 pip
 wheel
-virtualenv
-pipdeptree
