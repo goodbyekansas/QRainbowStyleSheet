@@ -4,9 +4,6 @@
 setuptools
 pip
 wheel
-virtualenv
-pipdeptree
-helpdev
 qtsass
 watchdog
 pyqt5
