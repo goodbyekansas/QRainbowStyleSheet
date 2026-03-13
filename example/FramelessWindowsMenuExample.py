@@ -21,7 +21,9 @@ def main():
 
     app = QApplication(sys.argv)
     app.setStyleSheet(qrainbowstyle.load_stylesheet(style="oceanic"))
-    qrainbowstyle.setAppIcon(os.path.join(os.path.dirname(os.path.realpath(__file__)), "github_logo.png"))
+    qrainbowstyle.setAppIcon(
+        os.path.join(os.path.dirname(os.path.realpath(__file__)), "github_logo.png")
+    )
 
     dialog = FramelessWindow()
     dialog.setWindowTitle("FDialog")
@@ -56,5 +58,5 @@ def main():
     sys.exit(app.exec())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

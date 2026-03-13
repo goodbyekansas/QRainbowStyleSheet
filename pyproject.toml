@@ -1,3 +1,10 @@
+[tool.ruff]
+exclude = [
+    "*_rc.py",
+    "*_ui.py",
+    "build",
+]
+
 [tool.ruff.lint]
 # For all rules, see: https://docs.astral.sh/ruff/rules/
 select = [

@@ -19,12 +19,14 @@ class FramelessWindowBase(QDialog):
         self.setMouseTracking(True)
         self.setAttribute(Qt.WA_NoSystemBackground)
         super().setContentsMargins(0, 0, 0, 0)
-        super().setWindowFlags(Qt.Window
-                               | Qt.FramelessWindowHint
-                               | Qt.WindowSystemMenuHint
-                               | Qt.WindowMinimizeButtonHint
-                               | Qt.WindowMaximizeButtonHint
-                               | Qt.WindowCloseButtonHint)
+        super().setWindowFlags(
+            Qt.Window
+            | Qt.FramelessWindowHint
+            | Qt.WindowSystemMenuHint
+            | Qt.WindowMinimizeButtonHint
+            | Qt.WindowMaximizeButtonHint
+            | Qt.WindowCloseButtonHint
+        )
 
         self.__centralWidget = QWidget(self)
         self.__centralWidget.setObjectName("__centralWidget")
@@ -45,9 +47,7 @@ class FramelessWindowBase(QDialog):
 
         self.__contentWidget = QWidget(self)
         self.__contentWidget.setObjectName("__contentWidget")
-        self.__contentWidget.setSizePolicy(
-            QSizePolicy.Expanding,
-            QSizePolicy.Expanding)
+        self.__contentWidget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.__contentWidget.setContentsMargins(2, 0, 2, 2)
         self.__contentWidgetLayout = QVBoxLayout(self.__contentWidget)
         self.__contentWidgetLayout.setContentsMargins(0, 0, 0, 0)
@@ -135,7 +135,10 @@ class FramelessWindowBase(QDialog):
         super().setWindowIcon(icon)
 
     def changeEvent(self, event: QEvent) -> None:
-        if event.type() == QEvent.WindowStateChange and not qrainbowstyle.USE_DARWIN_BUTTONS:
+        if (
+            event.type() == QEvent.WindowStateChange
+            and not qrainbowstyle.USE_DARWIN_BUTTONS
+        ):
             if self.isMaximized():
                 self.__bar.showRestoreButton(True)
                 self.__bar.showMaximizeButton(False)

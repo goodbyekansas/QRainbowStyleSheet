@@ -12,29 +12,50 @@ import helpdev
 # Local imports
 import qrainbowstyle
 
-sys.path.insert(0, abspath(dirname(abspath(__file__)) + '/..'))
+sys.path.insert(0, abspath(dirname(abspath(__file__)) + "/.."))
 
 
 def main():
     """Execute QRainbowStyle helper."""
-    parser = argparse.ArgumentParser(description="QRainbowStyle helper. Use the option --all to report bugs",
-                                     formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('-i', '--information', action='store_true',
-                        help="Show information about environment")
-    parser.add_argument('-b', '--bindings', action='store_true',
-                        help="Show available bindings for Qt")
-    parser.add_argument('-a', '--abstractions', action='store_true',
-                        help="Show available abstraction layers for Qt bindings")
-    parser.add_argument('-d', '--dependencies', action='store_true',
-                        help="Show information about dependencies")
-    parser.add_argument('-s', '--styles', action='store_true',
-                        help="Show available styles")
+    parser = argparse.ArgumentParser(
+        description="QRainbowStyle helper. Use the option --all to report bugs",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument(
+        "-i",
+        "--information",
+        action="store_true",
+        help="Show information about environment",
+    )
+    parser.add_argument(
+        "-b", "--bindings", action="store_true", help="Show available bindings for Qt"
+    )
+    parser.add_argument(
+        "-a",
+        "--abstractions",
+        action="store_true",
+        help="Show available abstraction layers for Qt bindings",
+    )
+    parser.add_argument(
+        "-d",
+        "--dependencies",
+        action="store_true",
+        help="Show information about dependencies",
+    )
+    parser.add_argument(
+        "-s", "--styles", action="store_true", help="Show available styles"
+    )
 
-    parser.add_argument('--all', action='store_true',
-                        help="Show all information options at once")
+    parser.add_argument(
+        "--all", action="store_true", help="Show all information options at once"
+    )
 
-    parser.add_argument('-v', '--version', action='version',
-                        version='v{}'.format(qrainbowstyle.__version__))
+    parser.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        version="v{}".format(qrainbowstyle.__version__),
+    )
 
     # parsing arguments from command line
     args = parser.parse_args()
@@ -58,7 +79,7 @@ def main():
         info.update(helpdev.check_qt_abstractions())
 
     if args.dependencies or args.all:
-        info.update(helpdev.check_python_packages(packages='helpdev,qrainbowstyle'))
+        info.update(helpdev.check_python_packages(packages="helpdev,qrainbowstyle"))
 
     helpdev.print_output(info)
 

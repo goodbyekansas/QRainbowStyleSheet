@@ -15,17 +15,14 @@ class OutputLogger:
 
         try:
             import coloredlogs
-            self.formatter = coloredlogs.ColoredFormatter("%(asctime)s "
-                                                          "[%(threadName)s] "
-                                                          "[%(name)s] "
-                                                          "[%(levelname)s] "
-                                                          "%(message)s")
+
+            self.formatter = coloredlogs.ColoredFormatter(
+                "%(asctime)s [%(threadName)s] [%(name)s] [%(levelname)s] %(message)s"
+            )
         except ImportError:
-            self.formatter = logging.Formatter("%(asctime)s "
-                                               "[%(threadName)s] "
-                                               "[%(name)s] "
-                                               "[%(levelname)s] "
-                                               "%(message)s")
+            self.formatter = logging.Formatter(
+                "%(asctime)s [%(threadName)s] [%(name)s] [%(levelname)s] %(message)s"
+            )
 
         self.handler.setFormatter(self.formatter)
         self.logger.addHandler(self.handler)

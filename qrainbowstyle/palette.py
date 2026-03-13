@@ -13,37 +13,37 @@ class BasePalette:
     """Base class for palettes."""
 
     # Color
-    COLOR_BACKGROUND_1 = ''
-    COLOR_BACKGROUND_2 = ''
-    COLOR_BACKGROUND_3 = ''
-    COLOR_BACKGROUND_4 = ''
-    COLOR_BACKGROUND_5 = ''
-    COLOR_BACKGROUND_6 = ''
+    COLOR_BACKGROUND_1 = ""
+    COLOR_BACKGROUND_2 = ""
+    COLOR_BACKGROUND_3 = ""
+    COLOR_BACKGROUND_4 = ""
+    COLOR_BACKGROUND_5 = ""
+    COLOR_BACKGROUND_6 = ""
 
-    COLOR_TEXT_1 = ''
-    COLOR_TEXT_2 = ''
-    COLOR_TEXT_3 = ''
-    COLOR_TEXT_4 = ''
+    COLOR_TEXT_1 = ""
+    COLOR_TEXT_2 = ""
+    COLOR_TEXT_3 = ""
+    COLOR_TEXT_4 = ""
 
-    COLOR_ACCENT_1 = ''
-    COLOR_ACCENT_2 = ''
-    COLOR_ACCENT_3 = ''
-    COLOR_ACCENT_4 = ''
-    COLOR_ACCENT_5 = ''
+    COLOR_ACCENT_1 = ""
+    COLOR_ACCENT_2 = ""
+    COLOR_ACCENT_3 = ""
+    COLOR_ACCENT_4 = ""
+    COLOR_ACCENT_5 = ""
 
     OPACITY_TOOLTIP = 0
 
     # Size
-    SIZE_BORDER_RADIUS = '4px'
+    SIZE_BORDER_RADIUS = "4px"
 
     # Borders
-    BORDER_1 = '1px solid $COLOR_BACKGROUND_1'
-    BORDER_2 = '1px solid $COLOR_BACKGROUND_4'
-    BORDER_3 = '1px solid $COLOR_BACKGROUND_6'
+    BORDER_1 = "1px solid $COLOR_BACKGROUND_1"
+    BORDER_2 = "1px solid $COLOR_BACKGROUND_4"
+    BORDER_3 = "1px solid $COLOR_BACKGROUND_6"
 
-    BORDER_SELECTION_3 = '1px solid $COLOR_ACCENT_3'
-    BORDER_SELECTION_2 = '1px solid $COLOR_ACCENT_2'
-    BORDER_SELECTION_1 = '1px solid $COLOR_ACCENT_1'
+    BORDER_SELECTION_3 = "1px solid $COLOR_ACCENT_3"
+    BORDER_SELECTION_2 = "1px solid $COLOR_ACCENT_2"
+    BORDER_SELECTION_1 = "1px solid $COLOR_ACCENT_1"
 
     TITLE_BAR_BACKGROUND_COLOR = COLOR_ACCENT_3
     TITLE_BAR_BUTTONS_HOVER_COLOR = COLOR_ACCENT_4
@@ -57,40 +57,40 @@ class BasePalette:
     def to_dict(cls, colors_only=False):
         """Convert variables to dictionary."""
         order = [
-            'COLOR_BACKGROUND_6',
-            'COLOR_BACKGROUND_5',
-            'COLOR_BACKGROUND_4',
-            'COLOR_BACKGROUND_2',
-            'COLOR_BACKGROUND_3',
-            'COLOR_BACKGROUND_1',
-            'COLOR_TEXT_1',
-            'COLOR_TEXT_2',
-            'COLOR_TEXT_3',
-            'COLOR_TEXT_4',
-            'COLOR_ACCENT_1',
-            'COLOR_ACCENT_2',
-            'COLOR_ACCENT_3',
-            'COLOR_ACCENT_4',
-            'OPACITY_TOOLTIP',
-            'SIZE_BORDER_RADIUS',
-            'BORDER_1',
-            'BORDER_2',
-            'BORDER_3',
-            'BORDER_SELECTION_3',
-            'BORDER_SELECTION_2',
-            'BORDER_SELECTION_1',
-            'TITLE_BAR_BACKGROUND_COLOR',
-            'TITLE_BAR_BUTTONS_HOVER_COLOR',
-            'TITLE_BAR_BUTTONS_DISABLED_COLOR',
-            'TITLE_BAR_TEXT_COLOR',
-            'PATH_RESOURCES',
+            "COLOR_BACKGROUND_6",
+            "COLOR_BACKGROUND_5",
+            "COLOR_BACKGROUND_4",
+            "COLOR_BACKGROUND_2",
+            "COLOR_BACKGROUND_3",
+            "COLOR_BACKGROUND_1",
+            "COLOR_TEXT_1",
+            "COLOR_TEXT_2",
+            "COLOR_TEXT_3",
+            "COLOR_TEXT_4",
+            "COLOR_ACCENT_1",
+            "COLOR_ACCENT_2",
+            "COLOR_ACCENT_3",
+            "COLOR_ACCENT_4",
+            "OPACITY_TOOLTIP",
+            "SIZE_BORDER_RADIUS",
+            "BORDER_1",
+            "BORDER_2",
+            "BORDER_3",
+            "BORDER_SELECTION_3",
+            "BORDER_SELECTION_2",
+            "BORDER_SELECTION_1",
+            "TITLE_BAR_BACKGROUND_COLOR",
+            "TITLE_BAR_BUTTONS_HOVER_COLOR",
+            "TITLE_BAR_BUTTONS_DISABLED_COLOR",
+            "TITLE_BAR_TEXT_COLOR",
+            "PATH_RESOURCES",
         ]
         dic = OrderedDict()
         for var in order:
             value = getattr(cls, var)
 
             if colors_only:
-                if not var.startswith('COLOR'):
+                if not var.startswith("COLOR"):
                     value = None
 
             if value:
@@ -106,6 +106,7 @@ class BasePalette:
 
 class Oceanic(BasePalette):
     """Theme variables."""
+
     COLOR_BACKGROUND_1 = "#263238"
     COLOR_BACKGROUND_2 = "#2f4048"
     COLOR_BACKGROUND_3 = "#34474f"
@@ -188,8 +189,8 @@ class DarkOrange(BasePalette):
 
 
 class GBK(BasePalette):
-    """A dark theme with a brown background and orange accents.
-    """
+    """A dark theme with a brown background and orange accents."""
+
     COLOR_BACKGROUND_1 = "#14130a"
     COLOR_BACKGROUND_2 = "#1f1d15"
     COLOR_BACKGROUND_3 = "#2a2820"

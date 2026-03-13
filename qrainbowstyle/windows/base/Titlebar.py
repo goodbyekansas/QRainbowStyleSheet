@@ -119,6 +119,9 @@ class Titlebar(QFrame):
         if self.childAt(QPoint(x, y)):
             return False
         else:
-            return QRect(self.appLogoLabel.width(), 0,
-                         self.width() - self.appLogoLabel.width(),
-                         self.height()).contains(QPoint(x, y))
+            return QRect(
+                self.appLogoLabel.width(),
+                0,
+                self.width() - self.appLogoLabel.width(),
+                self.height(),
+            ).contains(QPoint(x, y))

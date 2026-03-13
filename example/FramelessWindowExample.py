@@ -3,10 +3,33 @@ import sys
 
 from qtpy import QtWidgets
 from qtpy.QtCore import qInstallMessageHandler, QSize, QDateTime, Qt, QTimer
-from qtpy.QtWidgets import (QApplication, QWidget, QComboBox, QStyleFactory, QLabel, QCheckBox, QHBoxLayout,
-                            QGridLayout, QGroupBox, QRadioButton, QVBoxLayout, QPushButton, QTabWidget, QSizePolicy,
-                            QTableWidget, QTextEdit, QLineEdit, QSpinBox, QDateTimeEdit, QSlider, QScrollBar, QDial,
-                            QProgressBar, QMenu, QAction)
+from qtpy.QtWidgets import (
+    QApplication,
+    QWidget,
+    QComboBox,
+    QStyleFactory,
+    QLabel,
+    QCheckBox,
+    QHBoxLayout,
+    QGridLayout,
+    QGroupBox,
+    QRadioButton,
+    QVBoxLayout,
+    QPushButton,
+    QTabWidget,
+    QSizePolicy,
+    QTableWidget,
+    QTextEdit,
+    QLineEdit,
+    QSpinBox,
+    QDateTimeEdit,
+    QSlider,
+    QScrollBar,
+    QDial,
+    QProgressBar,
+    QMenu,
+    QAction,
+)
 
 import qrainbowstyle
 import qrainbowstyle.extras
@@ -64,7 +87,7 @@ class WidgetGallery(QWidget):
         mainLayout.setColumnStretch(1, 1)
         self.setLayout(mainLayout)
 
-        self.changeStyle('Windows')
+        self.changeStyle("Windows")
 
         self.val = 0
 
@@ -73,7 +96,7 @@ class WidgetGallery(QWidget):
         self.changePalette()
 
     def changePalette(self):
-        if (self.useStylePaletteCheckBox.isChecked()):
+        if self.useStylePaletteCheckBox.isChecked():
             QApplication.setPalette(QApplication.style().standardPalette())
         else:
             QApplication.setPalette(self.originalPalette)
@@ -125,8 +148,9 @@ class WidgetGallery(QWidget):
 
     def createBottomLeftTabWidget(self):
         self.bottomLeftTabWidget = QTabWidget()
-        self.bottomLeftTabWidget.setSizePolicy(QSizePolicy.Preferred,
-                                               QSizePolicy.Ignored)
+        self.bottomLeftTabWidget.setSizePolicy(
+            QSizePolicy.Preferred, QSizePolicy.Ignored
+        )
 
         tab1 = QWidget()
         tableWidget = QTableWidget(10, 10)
@@ -139,12 +163,14 @@ class WidgetGallery(QWidget):
         tab2 = QWidget()
         textEdit = QTextEdit()
 
-        textEdit.setPlainText("Twinkle, twinkle, little star,\n"
-                              "How I wonder what you are.\n"
-                              "Up above the world so high,\n"
-                              "Like a diamond in the sky.\n"
-                              "Twinkle, twinkle, little star,\n"
-                              "How I wonder what you are!\n")
+        textEdit.setPlainText(
+            "Twinkle, twinkle, little star,\n"
+            "How I wonder what you are.\n"
+            "Up above the world so high,\n"
+            "Like a diamond in the sky.\n"
+            "Twinkle, twinkle, little star,\n"
+            "How I wonder what you are!\n"
+        )
 
         tab2hbox = QHBoxLayout()
         tab2hbox.setContentsMargins(5, 5, 5, 5)
@@ -159,7 +185,7 @@ class WidgetGallery(QWidget):
         self.bottomRightGroupBox.setCheckable(True)
         self.bottomRightGroupBox.setChecked(True)
 
-        lineEdit = QLineEdit('s3cRe7')
+        lineEdit = QLineEdit("s3cRe7")
         lineEdit.setEchoMode(QLineEdit.Password)
 
         spinBox = QSpinBox(self.bottomRightGroupBox)
@@ -213,7 +239,9 @@ def main():
     # Package options
     # qrainbowstyle.align_buttons_left()
     # qrainbowstyle.use_darwin_buttons()
-    qrainbowstyle.setAppIcon(os.path.join(os.path.dirname(os.path.realpath(__file__)), "github_logo.png"))
+    qrainbowstyle.setAppIcon(
+        os.path.join(os.path.dirname(os.path.realpath(__file__)), "github_logo.png")
+    )
 
     # Create frameless mainwindow
     win = qrainbowstyle.windows.FramelessWindow()
@@ -224,8 +252,17 @@ def main():
     win.addMenu(menu)
 
     # Example for spinner
-    spinner = qrainbowstyle.widgets.WaitingSpinner(win, centerOnParent=True, modality=Qt.WindowModal, roundness=70.0,
-                                                   fade=70.0, radius=9.0, lines=24, line_length=35.0, line_width=2.0)
+    spinner = qrainbowstyle.widgets.WaitingSpinner(
+        win,
+        centerOnParent=True,
+        modality=Qt.WindowModal,
+        roundness=70.0,
+        fade=70.0,
+        radius=9.0,
+        lines=24,
+        line_length=35.0,
+        line_width=2.0,
+    )
     spinner.start()
     spinner.fadeIn()
     t = QTimer()
@@ -249,5 +286,5 @@ def main():
     sys.exit(app.exec())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

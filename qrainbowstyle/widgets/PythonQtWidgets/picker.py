@@ -1,4 +1,11 @@
-from qtpy.QtWidgets import QGridLayout, QHBoxLayout, QVBoxLayout, QWidget, QPushButton, QApplication
+from qtpy.QtWidgets import (
+    QGridLayout,
+    QHBoxLayout,
+    QVBoxLayout,
+    QWidget,
+    QPushButton,
+    QApplication,
+)
 from qtpy.QtCore import Signal, QSize
 from qtpy.QtGui import QPixmap, QPainter, QPen, QColor, QIcon
 
@@ -81,7 +88,13 @@ class _PaletteLinearBase(_PaletteBase):
         colors = []
 
         for style in qrainbowstyle.getAvailablePalettes():
-            colors.append({1: style.COLOR_BACKGROUND_1, 2: style.COLOR_ACCENT_3, "name": style.__name__})
+            colors.append(
+                {
+                    1: style.COLOR_BACKGROUND_1,
+                    2: style.COLOR_ACCENT_3,
+                    "name": style.__name__,
+                }
+            )
 
         palette = self.layoutvh()
 
@@ -110,7 +123,13 @@ class StylePickerGrid(QWidget):
         colors = []
 
         for style in qrainbowstyle.getAvailablePalettes():
-            colors.append({1: style.COLOR_BACKGROUND_1, 2: style.COLOR_ACCENT_3, "name": style.__name__})
+            colors.append(
+                {
+                    1: style.COLOR_BACKGROUND_1,
+                    2: style.COLOR_ACCENT_3,
+                    "name": style.__name__,
+                }
+            )
 
         palette = QGridLayout()
         row, col = 0, 0

@@ -4,7 +4,11 @@ from qtpy.QtCore import Qt, qInstallMessageHandler
 import sys
 
 import qrainbowstyle
-from qrainbowstyle.widgets import StylePickerGrid, StylePickerHorizontal, StylePickerVertical
+from qrainbowstyle.widgets import (
+    StylePickerGrid,
+    StylePickerHorizontal,
+    StylePickerVertical,
+)
 from qrainbowstyle.windows import FramelessWindow
 from qrainbowstyle.extras import OutputLogger, qt_message_handler
 
@@ -42,5 +46,5 @@ def main():
     sys.exit(app.exec())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
