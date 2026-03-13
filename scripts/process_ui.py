@@ -32,78 +32,107 @@ REPO_ROOT = os.path.dirname(HERE)
 
 def main(arguments):
     """Process UI files."""
-    parser = argparse.ArgumentParser(description=__doc__,
-                                     formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--ui_dir',
-                        default=os.path.join(REPO_ROOT, 'example', 'ui'),
-                        type=str,
-                        help="UI files directory, relative to current directory.",)
-    parser.add_argument('--create',
-                        default='qtpy',
-                        choices=['pyqt5', 'pyside2', 'pyside6', 'qtpy', 'all'],
-                        type=str,
-                        help="Choose which one would be generated.")
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument(
+        "--ui_dir",
+        default=os.path.join(REPO_ROOT, "example", "ui"),
+        type=str,
+        help="UI files directory, relative to current directory.",
+    )
+    parser.add_argument(
+        "--create",
+        default="qtpy",
+        choices=["pyqt5", "pyside2", "pyside6", "qtpy", "all"],
+        type=str,
+        help="Choose which one would be generated.",
+    )
 
     args = parser.parse_args(arguments)
 
-    print('Changing directory to: ', args.ui_dir)
+    print("Changing directory to: ", args.ui_dir)
     os.chdir(args.ui_dir)
 
-    print('Converting .ui to .py ...')
+    print("Converting .ui to .py ...")
 
-    for ui_file in glob.glob('*.ui'):
+    for ui_file in glob.glob("*.ui"):
         # get name without extension
         filename = os.path.splitext(ui_file)[0]
-        print(filename, '...')
-        ext = '.py'
+        print(filename, "...")
+        ext = ".py"
 
         # creating names
-        py_file_pyqt5 = filename + '_pyqt5_ui' + ext
-        py_file_pyside2 = filename + '_pyside2_ui' + ext
-        py_file_pyside6 = filename + '_pyside6_ui' + ext
-        py_file_qtpy = filename + '_ui' + ext
+        py_file_pyqt5 = filename + "_pyqt5_ui" + ext
+        py_file_pyside2 = filename + "_pyside2_ui" + ext
+        py_file_pyside6 = filename + "_pyside6_ui" + ext
+        py_file_qtpy = filename + "_ui" + ext
 
         # calling external commands
-        if args.create in ['pyqt5', 'qtpy', 'all']:
+        if args.create in ["pyqt5", "qtpy", "all"]:
             try:
-                call(['pyuic5', '--import-from=qrainbowstyle', ui_file, '-o', py_file_pyqt5])
+                call(
+                    [
+                        "pyuic5",
+                        "--import-from=qrainbowstyle",
+                        ui_file,
+                        "-o",
+                        py_file_pyqt5,
+                    ]
+                )
             except Exception as er:
                 print("You must install pyuic5 %s", str(er))
             else:
                 print("Compiling using pyuic5 ...")
 
-        if args.create in ['pyside2', 'all']:
+        if args.create in ["pyside2", "all"]:
             try:
-                call(['pyside2-uic', '--import-from=qrainbowstyle', ui_file, '-o', py_file_pyside2])
+                call(
+                    [
+                        "pyside2-uic",
+                        "--import-from=qrainbowstyle",
+                        ui_file,
+                        "-o",
+                        py_file_pyside2,
+                    ]
+                )
             except Exception as er:
                 print("You must install pyside2-uic %s", str(er))
             else:
                 print("Compiling using pyside2-uic ...")
 
-        if args.create in ['pyside6', 'all']:
+        if args.create in ["pyside6", "all"]:
             try:
-                call(['pyside6-uic', '--import-from=qrainbowstyle', ui_file, '-o', py_file_pyside6])
+                call(
+                    [
+                        "pyside6-uic",
+                        "--import-from=qrainbowstyle",
+                        ui_file,
+                        "-o",
+                        py_file_pyside6,
+                    ]
+                )
             except Exception as er:
                 print("You must install pyside6-uic %s", str(er))
             else:
                 print("Compiling using pyside6-uic ...")
 
-        if args.create in ['qtpy', 'all']:
+        if args.create in ["qtpy", "all"]:
             print("Creating also for qtpy ...")
             # special case - qtpy - syntax is PyQt5
-            with open(py_file_pyqt5, 'r') as file:
+            with open(py_file_pyqt5, "r") as file:
                 filedata = file.read()
 
             # replace the target string
-            filedata = filedata.replace('from PyQt5', 'from qtpy')
+            filedata = filedata.replace("from PyQt5", "from qtpy")
 
-            with open(py_file_qtpy, 'w+') as file:
+            with open(py_file_qtpy, "w+") as file:
                 # write the file out again
                 file.write(filedata)
 
-            if args.create not in ['pyqt5']:
+            if args.create not in ["pyqt5"]:
                 os.remove(py_file_pyqt5)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main(sys.argv[1:]))

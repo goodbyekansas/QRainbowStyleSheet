@@ -9,7 +9,9 @@ if sys.platform == "win32":
         import ctypes.wintypes
         from ctypes.wintypes import POINT
     except Exception as e:
-        raise ImportError("Could not import required library for Windows support: ".format(e))
+        raise ImportError(
+            "Could not import required library for Windows support: ".format(e)
+        )
 
 else:
     raise Exception("Windows API is not supported on non Windows OS.")
@@ -128,11 +130,16 @@ class FramelessWindow(FramelessWindowBase):
 
         if value:
             style = win32gui.GetWindowLong(self.hwnd, win32con.GWL_STYLE)
-            win32gui.SetWindowLong(self.hwnd, win32con.GWL_STYLE, style | win32con.WS_TILEDWINDOW)
+            win32gui.SetWindowLong(
+                self.hwnd, win32con.GWL_STYLE, style | win32con.WS_TILEDWINDOW
+            )
         else:
             style = win32gui.GetWindowLong(self.hwnd, win32con.GWL_STYLE)
             win32gui.SetWindowLong(
-                self.hwnd, win32con.GWL_STYLE, style & ~win32con.WS_OVERLAPPEDWINDOW | win32con.WS_POPUPWINDOW)
+                self.hwnd,
+                win32con.GWL_STYLE,
+                style & ~win32con.WS_OVERLAPPEDWINDOW | win32con.WS_POPUPWINDOW,
+            )
 
     def nativeEvent(self, eventType, message):
         """Handle frameless window native events.
@@ -149,8 +156,7 @@ class FramelessWindow(FramelessWindowBase):
                 return True, 0
 
             elif msg.message == win32con.WM_GETMINMAXINFO:
-                info = ctypes.cast(
-                    msg.lParam, ctypes.POINTER(MINMAXINFO)).contents
+                info = ctypes.cast(msg.lParam, ctypes.POINTER(MINMAXINFO)).contents
                 info.ptMaxSize.x = self.__rect.width()
                 info.ptMaxSize.y = self.__rect.height() - 1
                 info.ptMaxPosition.x, info.ptMaxPosition.y = 0, 0
@@ -201,4 +207,6 @@ class FramelessWindow(FramelessWindowBase):
     def __setStyle(self):
         self.hwnd = int(self.winId())
         style = win32gui.GetWindowLong(self.hwnd, win32con.GWL_STYLE)
-        win32gui.SetWindowLong(self.hwnd, win32con.GWL_STYLE, style | win32con.WS_TILEDWINDOW)
+        win32gui.SetWindowLong(
+            self.hwnd, win32con.GWL_STYLE, style | win32con.WS_TILEDWINDOW
+        )

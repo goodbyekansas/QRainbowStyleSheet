@@ -25,8 +25,20 @@ SOFTWARE.
 import sys
 
 from qtpy.QtCore import Qt, qInstallMessageHandler
-from qtpy.QtWidgets import (QWidget, QGridLayout, QGroupBox, QHBoxLayout, QSpinBox, QDoubleSpinBox, QPushButton,
-                            QLabel, QColorDialog, QApplication, QMessageBox, QFormLayout)
+from qtpy.QtWidgets import (
+    QWidget,
+    QGridLayout,
+    QGroupBox,
+    QHBoxLayout,
+    QSpinBox,
+    QDoubleSpinBox,
+    QPushButton,
+    QLabel,
+    QColorDialog,
+    QApplication,
+    QMessageBox,
+    QFormLayout,
+)
 
 from pyqtspinner import WaitingSpinner
 
@@ -190,23 +202,27 @@ class Demo(QWidget):
 
     def show_init_args(self):
         text = (
-            'WaitingSpinner(\n'
-            '    parent,\n'
-            '    roundness={}, opacity={},\n'
-            '    fade={}, radius={}, lines={},\n'
-            '    line_length={}, line_width={},\n'
-            '    speed={}, color={}\n'
-            ')\n'
+            "WaitingSpinner(\n"
+            "    parent,\n"
+            "    roundness={}, opacity={},\n"
+            "    fade={}, radius={}, lines={},\n"
+            "    line_length={}, line_width={},\n"
+            "    speed={}, color={}\n"
+            ")\n"
         ).format(
-            self.sb_roundness.value(), self.sb_opacity.value(),
-            self.sb_fadeperc.value(), self.sb_inner_radius.value(),
-            self.sb_lines.value(), self.sb_line_length.value(),
-            self.sb_line_width.value(), self.sb_rev_s.value(),
-            self.spinner.color.getRgb()[:3]
+            self.sb_roundness.value(),
+            self.sb_opacity.value(),
+            self.sb_fadeperc.value(),
+            self.sb_inner_radius.value(),
+            self.sb_lines.value(),
+            self.sb_line_length.value(),
+            self.sb_line_width.value(),
+            self.sb_rev_s.value(),
+            self.spinner.color.getRgb()[:3],
         )
 
         msg_box = QMessageBox(text=text)
-        msg_box.setWindowTitle('Text was copied to clipboard')
+        msg_box.setWindowTitle("Text was copied to clipboard")
         cb = QApplication.clipboard()
         cb.clear(mode=cb.Clipboard)
         cb.setText(text, mode=cb.Clipboard)
@@ -220,7 +236,7 @@ class Demo(QWidget):
         self.spinner.fadeOut()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     qInstallMessageHandler(qt_message_handler)
     app = QApplication(sys.argv)
     app.setStyleSheet(qrainbowstyle.load_stylesheet())

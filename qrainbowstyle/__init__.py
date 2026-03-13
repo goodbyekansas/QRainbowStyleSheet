@@ -107,25 +107,25 @@ _logger = logging.getLogger("qrainbowstyle")
 # Folder's path
 REPO_PATH = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
 
-EXAMPLE_PATH = os.path.join(REPO_PATH, 'example')
-IMAGES_PATH = os.path.join(REPO_PATH, 'images')
-PACKAGE_PATH = os.path.join(REPO_PATH, 'qrainbowstyle')
+EXAMPLE_PATH = os.path.join(REPO_PATH, "example")
+IMAGES_PATH = os.path.join(REPO_PATH, "images")
+PACKAGE_PATH = os.path.join(REPO_PATH, "qrainbowstyle")
 
-QSS_PATH = os.path.join(PACKAGE_PATH, 'qss')
-RC_PATH = os.path.join(PACKAGE_PATH, 'rc')
-SVG_PATH = os.path.join(PACKAGE_PATH, 'svg')
-STYLES_PATH = os.path.join(PACKAGE_PATH, 'styles')
+QSS_PATH = os.path.join(PACKAGE_PATH, "qss")
+RC_PATH = os.path.join(PACKAGE_PATH, "rc")
+SVG_PATH = os.path.join(PACKAGE_PATH, "svg")
+STYLES_PATH = os.path.join(PACKAGE_PATH, "styles")
 
-BUTTONS_DARWIN_PATH = os.path.join(SVG_PATH, 'buttons_darwin')
-BUTTONS_NT_PATH = os.path.join(SVG_PATH, 'buttons_nt')
+BUTTONS_DARWIN_PATH = os.path.join(SVG_PATH, "buttons_darwin")
+BUTTONS_NT_PATH = os.path.join(SVG_PATH, "buttons_nt")
 
 # File names
-QSS_FILE = 'style.qss'
-QRC_FILE = QSS_FILE.replace('.qss', '.qrc')
+QSS_FILE = "style.qss"
+QRC_FILE = QSS_FILE.replace(".qss", ".qrc")
 
-MAIN_SCSS_FILE = 'main.scss'
-STYLES_SCSS_FILE = '_styles.scss'
-VARIABLES_SCSS_FILE = '_variables.scss'
+MAIN_SCSS_FILE = "main.scss"
+STYLES_SCSS_FILE = "_styles.scss"
+VARIABLES_SCSS_FILE = "_variables.scss"
 
 # File paths
 QSS_FILEPATH = os.path.join(PACKAGE_PATH, QSS_FILE)
@@ -164,15 +164,22 @@ def useDarwinButtons():
 
 def getAvailableStyles():
     """Get list of available styles"""
-    return [x for x in os.listdir(STYLES_PATH) if x not in ('__pycache__', '__init__.py')]
+    return [
+        x for x in os.listdir(STYLES_PATH) if x not in ("__pycache__", "__init__.py")
+    ]
 
 
 def getAvailablePalettes() -> list:
     """Get list of available palettes"""
     import qrainbowstyle.palette as source
+
     palettes = []
     for name, obj in inspect.getmembers(source):
-        if inspect.isclass(obj) and issubclass(obj, source.BasePalette) and obj is not source.BasePalette:
+        if (
+            inspect.isclass(obj)
+            and issubclass(obj, source.BasePalette)
+            and obj is not source.BasePalette
+        ):
             palettes.append(obj)
     return palettes
 
@@ -181,9 +188,12 @@ def getCurrentPalette():
     """Returns loaded palette"""
     try:
         from style_rc import palette  # noqa
+
         return palette
     except ModuleNotFoundError:
-        raise ModuleNotFoundError("Cannot find current palette. Did you load style sheet?")
+        raise ModuleNotFoundError(
+            "Cannot find current palette. Did you load style sheet?"
+        )
 
 
 def rainbowize(text: str) -> str:
@@ -203,9 +213,9 @@ def _apply_os_patches(palette):
     """
     os_fix = ""
 
-    if platform.system().lower() == 'darwin':
+    if platform.system().lower() == "darwin":
         # See issue #12, #267
-        os_fix = '''
+        os_fix = """
         QDockWidget::title
         {{
             background-color: {color};
@@ -215,7 +225,7 @@ def _apply_os_patches(palette):
         QTabBar::close-button {{
             padding: 2px;
         }}
-        '''.format(color=palette.COLOR_BACKGROUND_4)
+        """.format(color=palette.COLOR_BACKGROUND_4)
 
     # Only open the QSS file if any patch is needed
     if os_fix:
@@ -251,16 +261,16 @@ def _apply_version_patches(qt_version):
     """
     version_fix = ""
 
-    major, minor, patch = qt_version.split('.')
+    major, minor, patch = qt_version.split(".")
     major, minor, patch = int(major), int(minor), int(patch)
 
     if major == 5 and minor >= 14:
         # See issue #214
-        version_fix = '''
+        version_fix = """
         QMenu::item {
             padding: 4px 24px 4px 6px;
         }
-        '''
+        """
 
     if version_fix:
         _logger.info("Found version patches to be applied.")
@@ -290,13 +300,15 @@ def _apply_application_patches(palette, QCoreApplication, QPalette, QColor):
         app_palette.setColor(QPalette.Normal, QPalette.Link, qcolor)
         app.setPalette(app_palette)
     else:
-        _logger.warning("No QCoreApplication instance found. "
-                        "Application patches not applied. "
-                        "You have to call load_stylesheet function after "
-                        "instantiation of QApplication to take effect. ")
+        _logger.warning(
+            "No QCoreApplication instance found. "
+            "Application patches not applied. "
+            "You have to call load_stylesheet function after "
+            "instantiation of QApplication to take effect. "
+        )
 
 
-def _load_stylesheet(qt_api='', style=''):
+def _load_stylesheet(qt_api="", style=""):
     """
     Load the stylesheet based on QtPy abstraction layer environment variable.
 
@@ -320,7 +332,7 @@ def _load_stylesheet(qt_api='', style=''):
     """
 
     if qt_api:
-        os.environ['QT_API'] = qt_api
+        os.environ["QT_API"] = qt_api
 
     # Import is made after setting QT_API
     from qtpy.QtCore import QCoreApplication, QFile, QTextStream
@@ -355,7 +367,11 @@ def _load_stylesheet(qt_api='', style=''):
             del style_rc
 
         # remove path to previously imported style from sys.path
-        for stylepath in [path for path in sys.path if any(style for style in getAvailableStyles() if style in path)]:
+        for stylepath in [
+            path
+            for path in sys.path
+            if any(style for style in getAvailableStyles() if style in path)
+        ]:
             sys.path.remove(stylepath)
         _logger.debug("Removed all imported styles")
 
@@ -370,11 +386,14 @@ def _load_stylesheet(qt_api='', style=''):
         sys.path.append(package_dir)
         try:
             import style_rc  # noqa
+
             # get palette
             palette = style_rc.palette
 
         except ModuleNotFoundError:
-            raise ModuleNotFoundError("Failed to import style_rc from directory: {}".format(package_dir))
+            raise ModuleNotFoundError(
+                "Failed to import style_rc from directory: {}".format(package_dir)
+            )
 
         finally:
             os.chdir(old_working_dir)
@@ -402,8 +421,9 @@ def _load_stylesheet(qt_api='', style=''):
     else:
         stylesheet = ""
         # Todo: check this raise type and add to docs
-        raise FileNotFoundError("Unable to find QSS file '{}' "
-                                "in resources.".format(qss_rc_path))
+        raise FileNotFoundError(
+            "Unable to find QSS file '{}' in resources.".format(qss_rc_path)
+        )
 
     _logger.debug("Checking patches for being applied.")
 
@@ -423,7 +443,7 @@ def _load_stylesheet(qt_api='', style=''):
     return stylesheet
 
 
-def load_stylesheet(qt_api="", style='qdarkstyle3'):
+def load_stylesheet(qt_api="", style="qdarkstyle3"):
     """
     Load the stylesheet. Takes care of importing the rc module.
 
@@ -445,6 +465,6 @@ def load_stylesheet(qt_api="", style='qdarkstyle3'):
         stylesheet = _load_stylesheet(qt_api=qt_api, style=style)
 
     else:
-        stylesheet = _load_stylesheet(qt_api='pyqt5', style=style)
+        stylesheet = _load_stylesheet(qt_api="pyqt5", style=style)
 
     return stylesheet

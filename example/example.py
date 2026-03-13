@@ -49,8 +49,8 @@ import time
 import random
 
 # Make the example runnable without the need to install and include ui
-sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.abspath(__file__)) + '/..'))
-sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.abspath(__file__)) + '/ui'))
+sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.abspath(__file__)) + "/.."))
+sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.abspath(__file__)) + "/ui"))
 
 # Must be in this place, after setting path, to not need to install
 import qrainbowstyle  # noqa: E402
@@ -66,19 +66,30 @@ SCREENSHOTS_PATH = qrainbowstyle.IMAGES_PATH
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__,
-                                     formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--qt_from', default='qtpy', type=str,
-                        choices=['pyqt5', 'pyside2', 'pyside6', 'qtpy', 'qt.py'],
-                        help="Choose which binding and/or abstraction is to be used to run the example.")
-    parser.add_argument('--style', type=str,
-                        help="Use custom style.")
-    parser.add_argument('--test', action='store_true',
-                        help="Auto close window after 2s.")
-    parser.add_argument('--reset', action='store_true',
-                        help="Reset GUI settings (position, size) then opens.")
-    parser.add_argument('--screenshots', action='store_true',
-                        help="Generate screenshots on images folder.")
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument(
+        "--qt_from",
+        default="qtpy",
+        type=str,
+        choices=["pyqt5", "pyside2", "pyside6", "qtpy", "qt.py"],
+        help="Choose which binding and/or abstraction is to be used to run the example.",
+    )
+    parser.add_argument("--style", type=str, help="Use custom style.")
+    parser.add_argument(
+        "--test", action="store_true", help="Auto close window after 2s."
+    )
+    parser.add_argument(
+        "--reset",
+        action="store_true",
+        help="Reset GUI settings (position, size) then opens.",
+    )
+    parser.add_argument(
+        "--screenshots",
+        action="store_true",
+        help="Generate screenshots on images folder.",
+    )
 
     # Parsing arguments from command line
     args = parser.parse_args()
@@ -94,35 +105,41 @@ def main():
 def _main(args):
     # To avoid problems when testing without screen
     if args.test or args.screenshots:
-        os.environ['QT_QPA_PLATFORM'] = 'offscreen'
+        os.environ["QT_QPA_PLATFORM"] = "offscreen"
 
     # Set QT_API variable before importing QtPy
-    if args.qt_from in ['pyqt5', 'pyside2', 'pyside6']:
-        os.environ['QT_API'] = args.qt_from
-    elif args.qt_from in ['qt.py', 'qt']:
+    if args.qt_from in ["pyqt5", "pyside2", "pyside6"]:
+        os.environ["QT_API"] = args.qt_from
+    elif args.qt_from in ["qt.py", "qt"]:
         try:
             import Qt
         except ImportError:
-            print('Could not import Qt (Qt.Py)')
+            print("Could not import Qt (Qt.Py)")
         else:
-            os.environ['QT_API'] = Qt.__binding__
+            os.environ["QT_API"] = Qt.__binding__
 
     # QtPy imports
     from qtpy import API_NAME, QT_VERSION, PYQT_VERSION, PYSIDE_VERSION
     from qtpy import __version__ as QTPY_VERSION
-    from qtpy.QtWidgets import (QApplication, QMainWindow, QDockWidget,
-                                QStatusBar, QLabel, QMenu)
+    from qtpy.QtWidgets import (
+        QApplication,
+        QMainWindow,
+        QDockWidget,
+        QStatusBar,
+        QLabel,
+        QMenu,
+    )
     from qtpy.QtCore import QTimer, Qt, QSettings
 
     # Set API_VERSION variable
-    API_VERSION = ''
+    API_VERSION = ""
 
     if PYQT_VERSION:
         API_VERSION = PYQT_VERSION
     elif PYSIDE_VERSION:
         API_VERSION = PYSIDE_VERSION
     else:
-        API_VERSION = 'Not found'
+        API_VERSION = "Not found"
 
     # Import examples UI
     from mw_menus_ui import Ui_MainWindow as ui_main
@@ -149,8 +166,8 @@ def _main(args):
         app = QApplication(sys.argv)
     else:
         app = QApplication.instance()
-    app.setOrganizationName('QRainbowStyle')
-    app.setApplicationName('QRainbowStyle Example')
+    app.setOrganizationName("QRainbowStyle")
+    app.setApplicationName("QRainbowStyle Example")
 
     styles = qrainbowstyle.getAvailableStyles()
 
@@ -166,18 +183,28 @@ def _main(args):
 
     widget = QMainWindow(window)
     widget.setWindowFlags(Qt.Widget)
-    widget.setObjectName('mainwindow')
+    widget.setObjectName("mainwindow")
     ui = ui_main()
     ui.setupUi(widget)
 
     window.addContentWidget(widget)
 
-    title = ("QRainbowStyle Example - "
-             + "(QRainbowStyle=v" + qrainbowstyle.__version__
-             + ", QtPy=v" + QTPY_VERSION
-             + ", " + API_NAME + "=v" + API_VERSION
-             + ", Qt=v" + QT_VERSION
-             + ", Python=v" + platform.python_version() + ")")
+    title = (
+        "QRainbowStyle Example - "
+        + "(QRainbowStyle=v"
+        + qrainbowstyle.__version__
+        + ", QtPy=v"
+        + QTPY_VERSION
+        + ", "
+        + API_NAME
+        + "=v"
+        + API_VERSION
+        + ", Qt=v"
+        + QT_VERSION
+        + ", Python=v"
+        + platform.python_version()
+        + ")"
+    )
 
     _logger.info(title)
 
@@ -185,7 +212,7 @@ def _main(args):
 
     # Create docks for buttons
     dw_buttons = QDockWidget()
-    dw_buttons.setObjectName('buttons')
+    dw_buttons.setObjectName("buttons")
     ui_buttons = ui_buttons()
     ui_buttons.setupUi(dw_buttons)
     widget.addDockWidget(Qt.RightDockWidgetArea, dw_buttons)
@@ -193,7 +220,7 @@ def _main(args):
     # Add actions on popup toolbuttons
     menu = QMenu()
 
-    for action in ['Action A', 'Action B', 'Action C']:
+    for action in ["Action A", "Action B", "Action C"]:
         menu.addAction(action)
 
     ui_buttons.toolButtonDelayedPopup.setMenu(menu)
@@ -202,49 +229,49 @@ def _main(args):
 
     # Create docks for buttons
     dw_displays = QDockWidget()
-    dw_displays.setObjectName('displays')
+    dw_displays.setObjectName("displays")
     ui_displays = ui_displays()
     ui_displays.setupUi(dw_displays)
     widget.addDockWidget(Qt.RightDockWidgetArea, dw_displays)
 
     # Create docks for inputs - no fields
     dw_inputs_no_fields = QDockWidget()
-    dw_inputs_no_fields.setObjectName('inputs_no_fields')
+    dw_inputs_no_fields.setObjectName("inputs_no_fields")
     ui_inputs_no_fields = ui_inputs_no_fields()
     ui_inputs_no_fields.setupUi(dw_inputs_no_fields)
     widget.addDockWidget(Qt.RightDockWidgetArea, dw_inputs_no_fields)
 
     # Create docks for inputs - fields
     dw_inputs_fields = QDockWidget()
-    dw_inputs_fields.setObjectName('inputs_fields')
+    dw_inputs_fields.setObjectName("inputs_fields")
     ui_inputs_fields = ui_inputs_fields()
     ui_inputs_fields.setupUi(dw_inputs_fields)
     widget.addDockWidget(Qt.RightDockWidgetArea, dw_inputs_fields)
 
     # Create docks for widgets
     dw_widgets = QDockWidget()
-    dw_widgets.setObjectName('widgets')
+    dw_widgets.setObjectName("widgets")
     ui_widgets = ui_widgets()
     ui_widgets.setupUi(dw_widgets)
     widget.addDockWidget(Qt.LeftDockWidgetArea, dw_widgets)
 
     # Create docks for views
     dw_views = QDockWidget()
-    dw_views.setObjectName('views')
+    dw_views.setObjectName("views")
     ui_views = ui_views()
     ui_views.setupUi(dw_views)
     widget.addDockWidget(Qt.LeftDockWidgetArea, dw_views)
 
     # Create docks for containers - no tabs
     dw_containers_no_tabs = QDockWidget()
-    dw_containers_no_tabs.setObjectName('containers_no_tabs')
+    dw_containers_no_tabs.setObjectName("containers_no_tabs")
     ui_containers_no_tabs = ui_containers_no_tabs()
     ui_containers_no_tabs.setupUi(dw_containers_no_tabs)
     widget.addDockWidget(Qt.LeftDockWidgetArea, dw_containers_no_tabs)
 
     # Create docks for containters - tabs
     dw_containers_tabs = QDockWidget()
-    dw_containers_tabs.setObjectName('containers_tabs')
+    dw_containers_tabs.setObjectName("containers_tabs")
     ui_containers_tabs = ui_containers_tabs()
     ui_containers_tabs.setupUi(dw_containers_tabs)
     widget.addDockWidget(Qt.LeftDockWidgetArea, dw_containers_tabs)
@@ -261,13 +288,13 @@ def _main(args):
 
     # Issues #9120, #9121 on Spyder
     qstatusbar = QStatusBar()
-    qstatusbar.addWidget(QLabel('Style'))
+    qstatusbar.addWidget(QLabel("Style"))
     qstatusbarbutton = qrainbowstyle.widgets.StylePickerHorizontal()
     qstatusbar.addWidget(qstatusbarbutton)
     qstatusbar.setSizeGripEnabled(False)
 
     # Add info also in status bar for screenshots get it
-    qstatusbar.addWidget(QLabel('INFO: ' + title))
+    qstatusbar.addWidget(QLabel("INFO: " + title))
     widget.setStatusBar(qstatusbar)
 
     # Todo: add report info and other info in HELP graphical
@@ -286,24 +313,24 @@ def _main(args):
 
 def _write_settings(window, QSettings):
     """Get window settings and write it into a file."""
-    settings = QSettings('QRainbowStyle', 'QRainbowStyle Example')
-    settings.setValue('pos', window.pos())
-    settings.setValue('size', window.size())
-    settings.setValue('state', window.saveState())
+    settings = QSettings("QRainbowStyle", "QRainbowStyle Example")
+    settings.setValue("pos", window.pos())
+    settings.setValue("size", window.size())
+    settings.setValue("state", window.saveState())
 
 
 def _read_settings(window, reset, QSettings):
     """Read and set window settings from a file."""
-    settings = QSettings('QRainbowStyle', 'QRainbowStyle Example')
+    settings = QSettings("QRainbowStyle", "QRainbowStyle Example")
 
     try:
-        pos = settings.value('pos', window.pos())
-        size = settings.value('size', window.size())
-        state = settings.value('state', window.saveState())
+        pos = settings.value("pos", window.pos())
+        size = settings.value("size", window.size())
+        state = settings.value("state", window.saveState())
     except Exception:
-        pos = settings.value('pos', window.pos(), type='QPoint')
-        size = settings.value('size', window.size(), type='QSize')
-        state = settings.value('state', window.saveState(), type='QByteArray')
+        pos = settings.value("pos", window.pos(), type="QPoint")
+        size = settings.value("size", window.size(), type="QSize")
+        state = settings.value("state", window.saveState(), type="QByteArray")
 
     if not reset:
         window.restoreState(state)

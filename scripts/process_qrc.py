@@ -36,7 +36,12 @@ from watchdog.observers import Observer
 # Local imports
 from qrainbowstyle import PACKAGE_PATH, STYLES_PATH, QRC_FILE, QSS_FILE
 from qrainbowstyle.extras import OutputLogger, qt_message_handler
-from qrainbowstyle.utils.images import create_images, create_palette_image, generate_qrc_file, create_titlebar_images
+from qrainbowstyle.utils.images import (
+    create_images,
+    create_palette_image,
+    generate_qrc_file,
+    create_titlebar_images,
+)
 from qrainbowstyle.utils.scss import create_qss
 
 from qtpy.QtCore import qInstallMessageHandler
@@ -52,9 +57,9 @@ class QSSFileHandler(FileSystemEventHandler):
 
     def on_modified(self, event):
         """Handle file system events."""
-        if event.src_path.endswith('.qss'):
+        if event.src_path.endswith(".qss"):
             run_process(self.args)
-            logging.debug('\n')
+            logging.debug("\n")
 
 
 def run_process(args):
@@ -65,7 +70,11 @@ def run_process(args):
 
     palettes = []
     for name, obj in inspect.getmembers(source):
-        if inspect.isclass(obj) and issubclass(obj, source.BasePalette) and obj is not source.BasePalette:
+        if (
+            inspect.isclass(obj)
+            and issubclass(obj, source.BasePalette)
+            and obj is not source.BasePalette
+        ):
             palettes.append(obj)
 
     logging.debug("Found palettes: " + str(palettes))
@@ -83,8 +92,8 @@ def run_process(args):
         output_dir = os.path.join(STYLES_PATH, palette_name)
 
         # get paths to output directories for this palette
-        images_dir = os.path.join(output_dir, 'images')
-        rc_dir = os.path.join(output_dir, 'rc')
+        images_dir = os.path.join(output_dir, "images")
+        rc_dir = os.path.join(output_dir, "rc")
         # qss_dir = os.path.join(output_dir, 'qss')
 
         # create directories
@@ -97,102 +106,113 @@ def run_process(args):
         # variables_scss_filepath = os.path.join(qss_dir, VARIABLES_SCSS_FILE)
 
         # Create palette and resources png images
-        logging.debug('Generating palette image ...')
+        logging.debug("Generating palette image ...")
         create_palette_image(palette=palette, path=images_dir)
 
-        logging.debug('Generating images ...')
+        logging.debug("Generating images ...")
         create_images(palette=palette, rc_path=rc_dir)
 
         logging.debug("Generating images for titlebar buttons")
         create_titlebar_images(rc_path=rc_dir, palette=palette)
 
-        logging.debug('Generating qrc ...')
+        logging.debug("Generating qrc ...")
         generate_qrc_file(rc_path=rc_dir, qrc_path=qrc_filepath)
 
-        logging.debug('Converting .qrc to _rc.py and/or .rcc ...')
+        logging.debug("Converting .qrc to _rc.py and/or .rcc ...")
 
-        for qrc_file in glob.glob('*.qrc'):
+        for qrc_file in glob.glob("*.qrc"):
             # get name without extension
             filename = os.path.splitext(qrc_file)[0]
 
-            logging.debug(filename + '...')
-            ext = '_rc.py'
-            ext_c = '.rcc'
+            logging.debug(filename + "...")
+            ext = "_rc.py"
+            ext_c = ".rcc"
 
             # Create variables SCSS files and compile SCSS files to QSS
-            logging.debug('Compiling SCSS/SASS files to QSS ...')
+            logging.debug("Compiling SCSS/SASS files to QSS ...")
             create_qss(palette=palette, qss_filepath=qss_filepath)
 
             # creating names
-            py_file_pyqt5 = 'pyqt5_' + filename + ext
-            py_file_pyside2 = 'pyside2_' + filename + ext
-            py_file_pyside6 = 'pyside6_' + filename + ext
-            py_file_qtpy = '' + filename + ext
+            py_file_pyqt5 = "pyqt5_" + filename + ext
+            py_file_pyside2 = "pyside2_" + filename + ext
+            py_file_pyside6 = "pyside6_" + filename + ext
+            py_file_qtpy = "" + filename + ext
 
             # append palette used to generate this file
-            used_palette = "\nfrom qrainbowstyle.palette import " + palette.__name__ + "\npalette = " + palette.__name__ + "\n"
+            used_palette = (
+                "\nfrom qrainbowstyle.palette import "
+                + palette.__name__
+                + "\npalette = "
+                + palette.__name__
+                + "\n"
+            )
 
             # calling external commands
-            if args.create in ['pyqt5', 'qtpy', 'all']:
+            if args.create in ["pyqt5", "qtpy", "all"]:
                 logging.debug("Compiling for PyQt5 ...")
                 try:
-                    call(['pyrcc5', qrc_file, '-o', py_file_pyqt5])
+                    call(["pyrcc5", qrc_file, "-o", py_file_pyqt5])
                     with open(py_file_pyqt5, "a+") as f:
                         f.write(used_palette)
                 except FileNotFoundError:
                     logging.debug("You must install pyrcc5")
 
-            if args.create in ['pyside2', 'all']:
+            if args.create in ["pyside2", "all"]:
                 logging.debug("Compiling for PySide 2...")
                 try:
-                    call(['pyside2-rcc', '-py3', qrc_file, '-o', py_file_pyside2])
+                    call(["pyside2-rcc", "-py3", qrc_file, "-o", py_file_pyside2])
                     with open(py_file_pyside2, "a+") as f:
                         f.write(used_palette)
                 except FileNotFoundError:
                     logging.debug("You must install pyside2-rcc")
 
-            if args.create in ['pyside6', 'all']:
+            if args.create in ["pyside6", "all"]:
                 logging.debug("Compiling for PySide 6...")
                 try:
-                    call(['pyside6-rcc', '-py3', qrc_file, '-o', py_file_pyside6])
+                    call(["pyside6-rcc", "-py3", qrc_file, "-o", py_file_pyside6])
                     with open(py_file_pyside6, "a+") as f:
                         f.write(used_palette)
                 except FileNotFoundError:
                     logging.debug("You must install pyside6-rcc")
 
-            if args.create in ['qtpy', 'all']:
+            if args.create in ["qtpy", "all"]:
                 logging.debug("Compiling for QtPy ...")
                 # special case - qtpy - syntax is PyQt5
-                with open(py_file_pyqt5, 'r') as file:
+                with open(py_file_pyqt5, "r") as file:
                     filedata = file.read()
 
                 # replace the target string
-                filedata = filedata.replace('from PyQt5', 'from qtpy')
+                filedata = filedata.replace("from PyQt5", "from qtpy")
 
-                with open(py_file_qtpy, 'w+') as file:
+                with open(py_file_qtpy, "w+") as file:
                     # write the file out again
                     file.write(filedata)
 
-                if args.create not in ['pyqt5']:
+                if args.create not in ["pyqt5"]:
                     os.remove(py_file_pyqt5)
 
 
 def main(arguments):
     """Process QRC files."""
-    parser = argparse.ArgumentParser(description=__doc__,
-                                     formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--qrc_dir',
-                        default=PACKAGE_PATH,
-                        type=str,
-                        help="QRC file directory, relative to current directory.",)
-    parser.add_argument('--create',
-                        default='qtpy',
-                        choices=['pyqt5', 'pyside2', 'pyside6', 'qtpy', 'qt5', 'all'],
-                        type=str,
-                        help="Choose which one would be generated.")
-    parser.add_argument('--watch', '-w',
-                        action='store_true',
-                        help="Watch for file changes.")
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument(
+        "--qrc_dir",
+        default=PACKAGE_PATH,
+        type=str,
+        help="QRC file directory, relative to current directory.",
+    )
+    parser.add_argument(
+        "--create",
+        default="qtpy",
+        choices=["pyqt5", "pyside2", "pyside6", "qtpy", "qt5", "all"],
+        type=str,
+        help="Choose which one would be generated.",
+    )
+    parser.add_argument(
+        "--watch", "-w", action="store_true", help="Watch for file changes."
+    )
 
     args = parser.parse_args(arguments)
 
@@ -202,7 +222,7 @@ def main(arguments):
         handler = QSSFileHandler(parser_args=args)
         observer.schedule(handler, path, recursive=True)
         try:
-            logging.debug('Watching QSS file for changes...Press Ctrl+C to exit')
+            logging.debug("Watching QSS file for changes...Press Ctrl+C to exit")
             observer.start()
         except KeyboardInterrupt:
             observer.stop()
@@ -211,7 +231,7 @@ def main(arguments):
         run_process(args)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     logger = OutputLogger()
     qInstallMessageHandler(qt_message_handler)
     sys.exit(main(sys.argv[1:]))

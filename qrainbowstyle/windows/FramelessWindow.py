@@ -45,6 +45,7 @@ class FramelessWindow(FramelessWindowBase):
         Args:
             flag (bool): Enable or disable mouse tracking.
         """
+
         def recursive_set(parent):
             for child in parent.findChildren(QObject):
                 try:
@@ -59,22 +60,31 @@ class FramelessWindow(FramelessWindowBase):
     def __updateGripRect(self):
         """Update rects for current window geometry."""
         # corner grip
-        self.__griprect = QRect(self.width() - self.__gripsize,
-                                self.height() - self.__gripsize,
-                                self.__gripsize,
-                                self.__gripsize)
+        self.__griprect = QRect(
+            self.width() - self.__gripsize,
+            self.height() - self.__gripsize,
+            self.__gripsize,
+            self.__gripsize,
+        )
 
         # right grip
-        self.__hgriprect = QRect(self.width() - self.__gripsize,
-                                 self.__titlebarHeight,
-                                 self.__gripsize,
-                                 self.height() - self.__gripsize - self.__sideGripIgnore - self.__titlebarHeight)
+        self.__hgriprect = QRect(
+            self.width() - self.__gripsize,
+            self.__titlebarHeight,
+            self.__gripsize,
+            self.height()
+            - self.__gripsize
+            - self.__sideGripIgnore
+            - self.__titlebarHeight,
+        )
 
         # bottom grip
-        self.__vgriprect = QRect(self.__gripsize,
-                                 self.height() - self.__gripsize,
-                                 self.width() - self.__gripsize - self.__sideGripIgnore,
-                                 self.__gripsize)
+        self.__vgriprect = QRect(
+            self.__gripsize,
+            self.height() - self.__gripsize,
+            self.width() - self.__gripsize - self.__sideGripIgnore,
+            self.__gripsize,
+        )
 
     def eventFilter(self, widget, event: QEvent):
         """Handle frameless window events.
@@ -83,22 +93,33 @@ class FramelessWindow(FramelessWindowBase):
             widget (QObject): Widget.
             event (QEvent): Event.
         """
-        if (hasattr(widget, "window")
-                and widget.window() is self):
+        if hasattr(widget, "window") and widget.window() is self:
             self.__updateGripRect()
 
-            if (hasattr(event, "x")
-                    and self.titlebar().rect().contains(self.mapFromParent(QCursor.pos()))
-                    and self.titlebar().mouseOverTitlebar(event.x(), event.y())):
+            if (
+                hasattr(event, "x")
+                and self.titlebar().rect().contains(self.mapFromParent(QCursor.pos()))
+                and self.titlebar().mouseOverTitlebar(event.x(), event.y())
+            ):
                 # when cursor is over titlebar
 
-                if event.type() == QMouseEvent.MouseButtonPress and event.buttons() == Qt.LeftButton:
+                if (
+                    event.type() == QMouseEvent.MouseButtonPress
+                    and event.buttons() == Qt.LeftButton
+                ):
                     # if titlebar clicked with left button
                     self.__moving = True
                     margins = self.titlebar().contentsMargins()
-                    self.__move_offset = event.pos() + self.titlebar().pos() - QPoint(margins.left(), margins.top())
+                    self.__move_offset = (
+                        event.pos()
+                        + self.titlebar().pos()
+                        - QPoint(margins.left(), margins.top())
+                    )
 
-                elif event.type() == QMouseEvent.MouseMove and event.buttons() == Qt.LeftButton:
+                elif (
+                    event.type() == QMouseEvent.MouseMove
+                    and event.buttons() == Qt.LeftButton
+                ):
                     # if holding left button and moving window
                     if self.__moving:
                         if self.windowState() == Qt.WindowMaximized:
@@ -109,7 +130,10 @@ class FramelessWindow(FramelessWindowBase):
                         else:
                             self.move(event.globalPos() - self.__move_offset)
 
-                elif event.type() == QMouseEvent.MouseButtonRelease and event.button() == Qt.LeftButton:
+                elif (
+                    event.type() == QMouseEvent.MouseButtonRelease
+                    and event.button() == Qt.LeftButton
+                ):
                     # if left button released
                     self.__moving = False
                     screen = QGuiApplication.primaryScreen().availableGeometry()
@@ -144,31 +168,46 @@ class FramelessWindow(FramelessWindowBase):
                 # fixes __moving remain True after clicking titlebar on border and leaving titlebar
                 self.__moving = False
 
-            elif (self.windowState() not in (Qt.WindowFullScreen, Qt.WindowMaximized)
-                    and self.isResizingEnabled()):
+            elif (
+                self.windowState() not in (Qt.WindowFullScreen, Qt.WindowMaximized)
+                and self.isResizingEnabled()
+            ):
                 # when cursor is not over titlebar
                 # and window is not maximized or in full screen mode
 
                 # button pressed
                 if event.type() == QMouseEvent.MouseButtonPress:
-                    if self.__griprect.contains(
-                            event.pos()) and not self.__horizontalResizing and not self.__verticalResizing:
+                    if (
+                        self.__griprect.contains(event.pos())
+                        and not self.__horizontalResizing
+                        and not self.__verticalResizing
+                    ):
                         # corner grip
                         self.__resizing = True
 
-                    elif self.__hgriprect.contains(
-                            event.pos()) and not self.__resizing and not self.__verticalResizing:
+                    elif (
+                        self.__hgriprect.contains(event.pos())
+                        and not self.__resizing
+                        and not self.__verticalResizing
+                    ):
                         # right grip
                         self.__horizontalResizing = True
 
-                    elif self.__vgriprect.contains(
-                            event.pos()) and not self.__resizing and not self.__horizontalResizing:
+                    elif (
+                        self.__vgriprect.contains(event.pos())
+                        and not self.__resizing
+                        and not self.__horizontalResizing
+                    ):
                         # bottom grip
                         self.__verticalResizing = True
 
                 if event.type() == QMouseEvent.MouseButtonRelease:
                     # stop resizing
-                    if self.__resizing or self.__horizontalResizing or self.__verticalResizing:
+                    if (
+                        self.__resizing
+                        or self.__horizontalResizing
+                        or self.__verticalResizing
+                    ):
                         self.__resizing = False
                         self.__horizontalResizing = False
                         self.__verticalResizing = False
@@ -177,33 +216,51 @@ class FramelessWindow(FramelessWindowBase):
                 if event.type() == QMouseEvent.MouseMove:
                     # moving cursor while holding left button -> resize
 
-                    if self.__resizing and not self.__horizontalResizing and not self.__verticalResizing:
+                    if (
+                        self.__resizing
+                        and not self.__horizontalResizing
+                        and not self.__verticalResizing
+                    ):
                         if event.buttons() == Qt.LeftButton:
                             self.setCursor(Qt.SizeFDiagCursor)
                             self.resize(QSize(event.x(), event.y()))
 
-                    elif self.__horizontalResizing and not self.__resizing and not self.__verticalResizing:
+                    elif (
+                        self.__horizontalResizing
+                        and not self.__resizing
+                        and not self.__verticalResizing
+                    ):
                         if event.buttons() == Qt.LeftButton:
                             self.setCursor(Qt.SizeHorCursor)
                             self.resize(QSize(event.x(), self.height()))
 
-                    elif self.__verticalResizing and not self.__resizing and not self.__horizontalResizing:
+                    elif (
+                        self.__verticalResizing
+                        and not self.__resizing
+                        and not self.__horizontalResizing
+                    ):
                         if event.buttons() == Qt.LeftButton:
                             self.setCursor(Qt.SizeVerCursor)
                             self.resize(QSize(self.width(), event.y()))
 
                     else:
-                        if (self.__griprect.contains(event.pos())
-                                and not self.__horizontalResizing
-                                and not self.__verticalResizing):
+                        if (
+                            self.__griprect.contains(event.pos())
+                            and not self.__horizontalResizing
+                            and not self.__verticalResizing
+                        ):
                             self.setCursor(Qt.SizeFDiagCursor)
-                        elif (self.__hgriprect.contains(event.pos())
-                              and not self.__resizing
-                              and not self.__verticalResizing):
+                        elif (
+                            self.__hgriprect.contains(event.pos())
+                            and not self.__resizing
+                            and not self.__verticalResizing
+                        ):
                             self.setCursor(Qt.SizeHorCursor)
-                        elif (self.__vgriprect.contains(event.pos())
-                              and not self.__resizing
-                              and not self.__horizontalResizing):
+                        elif (
+                            self.__vgriprect.contains(event.pos())
+                            and not self.__resizing
+                            and not self.__horizontalResizing
+                        ):
                             self.setCursor(Qt.SizeVerCursor)
                         else:
                             self.setCursor(Qt.ArrowCursor)

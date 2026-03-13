@@ -1,4 +1,11 @@
-from qtpy.QtWidgets import QWidget, QSizePolicy, QHBoxLayout, QToolButton, QLabel, QPushButton
+from qtpy.QtWidgets import (
+    QWidget,
+    QSizePolicy,
+    QHBoxLayout,
+    QToolButton,
+    QLabel,
+    QPushButton,
+)
 from qtpy.QtGui import QRegion
 from qtpy.QtCore import Qt, QSize, QRect
 
@@ -18,7 +25,7 @@ class MenuButton(QToolButton):
 
 class AppLogo(QLabel):
     """
-        Label with app logo.
+    Label with app logo.
     """
 
     def __init__(self, parent):
@@ -29,7 +36,6 @@ class AppLogo(QLabel):
 
 
 class TitlebarWindowsButton(QPushButton):
-
     def __init__(self, parent):
         super(TitlebarWindowsButton, self).__init__(parent)
         iconsize = QSize(45, 30)
@@ -49,31 +55,26 @@ class TitlebarWindowsButton(QPushButton):
 
 
 class MinimizeWindowsButton(TitlebarWindowsButton):
-
     def __init__(self, parent=None):
         super(MinimizeWindowsButton, self).__init__(parent)
 
 
 class MaximizeWindowsButton(TitlebarWindowsButton):
-
     def __init__(self, parent=None):
         super(MaximizeWindowsButton, self).__init__(parent)
 
 
 class RestoreWindowsButton(TitlebarWindowsButton):
-
     def __init__(self, parent=None):
         super(RestoreWindowsButton, self).__init__(parent)
 
 
 class CloseWindowsButton(TitlebarWindowsButton):
-
     def __init__(self, parent=None):
         super(CloseWindowsButton, self).__init__(parent)
 
 
 class CloseSquareWindowsButton(TitlebarWindowsButton):
-
     def __init__(self, parent=None):
         super(CloseSquareWindowsButton, self).__init__(parent)
         iconsize = QSize(30, 30)
@@ -82,7 +83,6 @@ class CloseSquareWindowsButton(TitlebarWindowsButton):
 
 
 class TitlebarDarwinButton(QPushButton):
-
     def __init__(self, parent):
         super(TitlebarDarwinButton, self).__init__(parent)
         self.setIconSize(QSize(15, 15))
@@ -97,25 +97,21 @@ class TitlebarDarwinButton(QPushButton):
 
 
 class MinimizeDarwinButton(TitlebarDarwinButton):
-
     def __init__(self, parent=None):
         super(MinimizeDarwinButton, self).__init__(parent)
 
 
 class MaximizeDarwinButton(TitlebarDarwinButton):
-
     def __init__(self, parent=None):
         super(MaximizeDarwinButton, self).__init__(parent)
 
 
 class RestoreDarwinButton(TitlebarDarwinButton):
-
     def __init__(self, parent=None):
         super(RestoreDarwinButton, self).__init__(parent)
 
 
 class CloseDarwinButton(TitlebarDarwinButton):
-
     def __init__(self, parent=None):
         super(CloseDarwinButton, self).__init__(parent)
 

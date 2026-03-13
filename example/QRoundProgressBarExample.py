@@ -1,4 +1,12 @@
-from qtpy.QtWidgets import QApplication, QWidget, QFormLayout, QSlider, QPushButton, QHBoxLayout, QLabel
+from qtpy.QtWidgets import (
+    QApplication,
+    QWidget,
+    QFormLayout,
+    QSlider,
+    QPushButton,
+    QHBoxLayout,
+    QLabel,
+)
 from qtpy.QtCore import Qt, qInstallMessageHandler
 
 import sys
@@ -8,8 +16,12 @@ from qrainbowstyle.widgets import QRoundProgressBar, StylePickerHorizontal
 from qrainbowstyle.windows import FramelessWindow
 from qrainbowstyle.extras import OutputLogger, qt_message_handler
 
-styles = [QRoundProgressBar.BarStyle.PIE, QRoundProgressBar.BarStyle.DONUT, QRoundProgressBar.BarStyle.EXPAND,
-          QRoundProgressBar.BarStyle.LINE]
+styles = [
+    QRoundProgressBar.BarStyle.PIE,
+    QRoundProgressBar.BarStyle.DONUT,
+    QRoundProgressBar.BarStyle.EXPAND,
+    QRoundProgressBar.BarStyle.LINE,
+]
 style_index = 0
 
 
@@ -83,5 +95,5 @@ def main():
     sys.exit(app.exec())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

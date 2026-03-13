@@ -6,7 +6,11 @@ import sys
 
 import qrainbowstyle
 from qrainbowstyle.extras import OutputLogger, qt_message_handler
-from qrainbowstyle.windows import FramelessWindow, FramelessQuestionMessageBox, FramelessWarningMessageBox
+from qrainbowstyle.windows import (
+    FramelessWindow,
+    FramelessQuestionMessageBox,
+    FramelessWarningMessageBox,
+)
 
 
 class BaseWindow(FramelessWindow):
@@ -63,7 +67,7 @@ class BaseWindow(FramelessWindow):
         self.warning.show()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     logger = OutputLogger()
     qInstallMessageHandler(qt_message_handler)
 

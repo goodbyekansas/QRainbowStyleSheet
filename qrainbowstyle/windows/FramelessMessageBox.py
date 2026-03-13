@@ -1,5 +1,13 @@
 from qtpy.QtCore import Qt, QSize
-from qtpy.QtWidgets import QGridLayout, QLabel, QStyle, QDialogButtonBox, QSizePolicy, QWidget, QApplication
+from qtpy.QtWidgets import (
+    QGridLayout,
+    QLabel,
+    QStyle,
+    QDialogButtonBox,
+    QSizePolicy,
+    QWidget,
+    QApplication,
+)
 from qtpy.QtGui import QIcon
 
 from . import FramelessWindow
@@ -45,7 +53,9 @@ class FramelessMessageBox(FramelessWindow):
         self.__grid.setRowMinimumHeight(2, 6)
 
         self.__buttonBox = QDialogButtonBox(self.__messagewidget)
-        self.__buttonBox.setStandardButtons(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        self.__buttonBox.setStandardButtons(
+            QDialogButtonBox.Ok | QDialogButtonBox.Cancel
+        )
         self.__grid.addWidget(self.__buttonBox, 3, 1, 1, 1)
 
         self.addContentWidget(self.__messagewidget)
@@ -142,19 +152,27 @@ class FramelessMessageBox(FramelessWindow):
 
 class FramelessWarningMessageBox(FramelessMessageBox):
     def __init__(self, parent=None):
-        super(FramelessWarningMessageBox, self).__init__(icon=QStyle.SP_MessageBoxWarning, parent=parent)
+        super(FramelessWarningMessageBox, self).__init__(
+            icon=QStyle.SP_MessageBoxWarning, parent=parent
+        )
 
 
 class FramelessInformationMessageBox(FramelessMessageBox):
     def __init__(self, parent=None):
-        super(FramelessInformationMessageBox, self).__init__(icon=QStyle.SP_MessageBoxInformation, parent=parent)
+        super(FramelessInformationMessageBox, self).__init__(
+            icon=QStyle.SP_MessageBoxInformation, parent=parent
+        )
 
 
 class FramelessCriticalMessageBox(FramelessMessageBox):
     def __init__(self, parent=None):
-        super(FramelessCriticalMessageBox, self).__init__(icon=QStyle.SP_MessageBoxCritical, parent=parent)
+        super(FramelessCriticalMessageBox, self).__init__(
+            icon=QStyle.SP_MessageBoxCritical, parent=parent
+        )
 
 
 class FramelessQuestionMessageBox(FramelessMessageBox):
     def __init__(self, parent=None):
-        super(FramelessQuestionMessageBox, self).__init__(icon=QStyle.SP_MessageBoxQuestion, parent=parent)
+        super(FramelessQuestionMessageBox, self).__init__(
+            icon=QStyle.SP_MessageBoxQuestion, parent=parent
+        )
