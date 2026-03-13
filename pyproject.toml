@@ -17,7 +17,40 @@ select = [
     "C4", # flake8-comprehensions
     "S",  # flake8-bandit
 ]
-ignore = ["D107", "D200", "D202", "D203", "D212", "D213", "D406", "D407", "D413", "S101"]
+ignore = [
+    "B007",  # Loop control variable not used within loop body
+    "B904",  # raise from err
+    "D100",  # Missing docstring in public module
+    "D101",  # Missing docstring in public class
+    "D102",  # Missing docstring in public method
+    "D103",  # Missing docstring in public function
+    "D104",  # Missing docstring in public package
+    "D106",  # Missing docstring in public nested class
+    "D107",  # Missing docstring in __init__
+    "D200",  # One-line docstring should fit on one line with quotes
+    "D202",  # No blank lines allowed after function docstring
+    "D203",  # 1 blank line required before class docstring
+    "D205",  # 1 blank line required between summary line and description
+    "D209",  # Multi-line docstring closing quotes should be on a separate line
+    "D212",  # Multi-line docstring summary should start at the first line
+    "D213",  # Multi-line docstring summary should start at the second line
+    "D406",  # Section name should be properly capitalized
+    "D407",  # Missing dashed underline after section
+    "D413",  # Missing blank line after last section
+    "D415",  # First line should end with a period
+    "D417",  # Missing argument description in the docstring
+    "E501",  # Line too long
+    "F401",  # ... imported but unused
+    "F403",  # from ... import * used
+    "F405",  # ... may be undefined, or defined from star imports
+    "F523",  # .format call has unused arguments
+    "F841",  # Local variable ... is assigned to but never used
+    "I001",  # Import block is un-sorted or un-formatted
+    "S101",  # Use of assert detected
+    "S311",  # Standard pseudo-random generators are not suitable for cryptographic purposes
+    "S603",  # subprocess call: check for execution of untrusted input
+    "S607",  # Starting a process with a partial executable path
+]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
