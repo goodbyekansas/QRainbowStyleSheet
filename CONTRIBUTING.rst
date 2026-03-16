@@ -352,17 +352,17 @@ maintainer in both.
 
 2. Generate a distribution (code package and wheel)
 
-   ``python setup.py sdist bdist_wheel``
+   ``python -m build``
 
 3. Check with ``twine``, which also tests README format for PyPI
 
    ``twine check dist/*``
 
 4. Try upload in `PyPI test
-   page <https://test.pypi.org/project/QRainbowstyle>`__ platform before
-   the oficial
+   page <https://test.pypi.org/project/QRainbowstyle>`__ platform before the
+   official one.
 
-   ``twine upload --repository-url https://test.pypi.org/legacy/ dist/*``
+   ``twine upload --repository testpypi dist/*``
 
 5. Try to install from test
 
@@ -373,9 +373,9 @@ maintainer in both.
    ``pip uninstall qrainbowstyle -y``
 
 7. Upload to `PyPI official
-   page <https://pypi.python.org/pypi/QRainbowstyle>`__
+   page <https://pypi.org/project/QRainbowstyle>`__
 
-   ``twine upload --repository-url https://upload.pypi.org/legacy/ dist/*``
+   ``twine upload dist/*``
 
 8. Try to install from oficial
 

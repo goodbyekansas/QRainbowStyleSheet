@@ -7,3 +7,4 @@ wheel
 
 # To release
 twine>=1.13
+build

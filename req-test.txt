@@ -11,8 +11,8 @@ pytest-qt
 # Coverage
 pytest-cov
 
-# Safety checks
-safety
+# Security checks
+pip-audit
 
 # Code metrics
 radon

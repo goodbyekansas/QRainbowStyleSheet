@@ -55,7 +55,6 @@ setup(
         "Environment :: X11 Applications :: Qt",
         "Environment :: Win32 (MS Windows)",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: MIT License",
         "Operating System :: Microsoft :: Windows",
         "Operating System :: POSIX :: Linux",
         "Operating System :: MacOS",

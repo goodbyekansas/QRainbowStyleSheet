@@ -14,6 +14,7 @@ Subpackages
    :maxdepth: 4
 
    qrainbowstyle.styles.DarkOrange
+   qrainbowstyle.styles.GBK
    qrainbowstyle.styles.LightOrange
    qrainbowstyle.styles.Oceanic
    qrainbowstyle.styles.PWRDark

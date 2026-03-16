@@ -19,11 +19,11 @@ Links to understand those tools:
 """
 
 # Standard library imports
-from subprocess import call
 import argparse
 import glob
 import os
 import sys
+import shutil
 
 # Constants
 HERE = os.path.abspath(os.path.dirname(__file__))
@@ -71,48 +71,57 @@ def main(arguments):
         # calling external commands
         if args.create in ["pyqt5", "qtpy", "all"]:
             try:
-                call(
-                    [
-                        "pyuic5",
-                        "--import-from=qrainbowstyle",
-                        ui_file,
-                        "-o",
-                        py_file_pyqt5,
-                    ]
-                )
-            except Exception as er:
-                print("You must install pyuic5 %s", str(er))
+                pyuic5_path = shutil.which("pyuic5")
+                if pyuic5_path:
+                    subprocess.run(
+                        [
+                            pyuic5_path,
+                            "--import-from=qrainbowstyle",
+                            ui_file,
+                            "-o",
+                            py_file_pyqt5,
+                        ],
+                        check=True,
+                    )
+            except FileNotFoundError:
+                print("You must install pyuic5")
             else:
                 print("Compiling using pyuic5 ...")
 
         if args.create in ["pyside2", "all"]:
             try:
-                call(
-                    [
-                        "pyside2-uic",
+                pyside2_uic_path = shutil.which("pyside2-uic")
+                if pyside2_uic_path:
+                    subprocess.run(
+                        [
+                            pyside2_uic_path,
                         "--import-from=qrainbowstyle",
                         ui_file,
                         "-o",
                         py_file_pyside2,
-                    ]
-                )
-            except Exception as er:
-                print("You must install pyside2-uic %s", str(er))
+                        ],
+                        check=True,
+                    )
+            except FileNotFoundError:
+                print("You must install pyside2-uic")
             else:
                 print("Compiling using pyside2-uic ...")
 
         if args.create in ["pyside6", "all"]:
             try:
-                call(
-                    [
-                        "pyside6-uic",
+                pyside6_uic_path = shutil.which("pyside6-uic")
+                if pyside6_uic_path:
+                    subprocess.run(
+                        [
+                            pyside6_uic_path,
                         "--import-from=qrainbowstyle",
                         ui_file,
                         "-o",
                         py_file_pyside6,
-                    ]
-                )
-            except Exception as er:
+                        ],
+                        check=True,
+                    )
+            except FileNotFoundError:
                 print("You must install pyside6-uic %s", str(er))
             else:
                 print("Compiling using pyside6-uic ...")

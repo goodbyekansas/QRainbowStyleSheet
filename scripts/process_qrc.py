@@ -23,18 +23,19 @@ Links to understand those tools:
 # Standard library imports
 
 import os
-import sys
 import glob
 import logging
 import argparse
-from subprocess import call
+import shutil
+import subprocess
+import sys
 
 # Third party imports
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 
 # Local imports
-from qrainbowstyle import PACKAGE_PATH, STYLES_PATH, QRC_FILE, QSS_FILE
+from qrainbowstyle import PACKAGE_PATH, QRC_FILE, QSS_FILE, STYLES_PATH
 from qrainbowstyle.extras import OutputLogger, qt_message_handler
 from qrainbowstyle.utils.images import (
     create_images,
@@ -123,10 +124,7 @@ def run_process(args):
         for qrc_file in glob.glob("*.qrc"):
             # get name without extension
             filename = os.path.splitext(qrc_file)[0]
-
-            logging.debug(filename + "...")
             ext = "_rc.py"
-            ext_c = ".rcc"
 
             # Create variables SCSS files and compile SCSS files to QSS
             logging.debug("Compiling SCSS/SASS files to QSS ...")
@@ -151,25 +149,39 @@ def run_process(args):
             if args.create in ["pyqt5", "qtpy", "all"]:
                 logging.debug("Compiling for PyQt5 ...")
                 try:
-                    call(["pyrcc5", qrc_file, "-o", py_file_pyqt5])
+                    pyrcc5_path = shutil.which("pyrcc5")
+                    if pyrcc5_path:
+                        subprocess.run(
+                            [pyrcc5_path, qrc_file, "-o", py_file_pyqt5], check=True
+                        )
                     with open(py_file_pyqt5, "a+") as f:
                         f.write(used_palette)
                 except FileNotFoundError:
                     logging.debug("You must install pyrcc5")
 
             if args.create in ["pyside2", "all"]:
-                logging.debug("Compiling for PySide 2...")
+                logging.debug("Compiling for PySide2...")
                 try:
-                    call(["pyside2-rcc", "-py3", qrc_file, "-o", py_file_pyside2])
+                    pyside2_rcc_path = shutil.which("pyside2-rcc")
+                    if pyside2_rcc_path:
+                        subprocess.run(
+                            [pyside2_rcc_path, "-py3", qrc_file, "-o", py_file_pyside2],
+                            check=True,
+                        )
                     with open(py_file_pyside2, "a+") as f:
                         f.write(used_palette)
                 except FileNotFoundError:
                     logging.debug("You must install pyside2-rcc")
 
             if args.create in ["pyside6", "all"]:
-                logging.debug("Compiling for PySide 6...")
+                logging.debug("Compiling for PySide6...")
                 try:
-                    call(["pyside6-rcc", "-py3", qrc_file, "-o", py_file_pyside6])
+                    pyside6_rcc_path = shutil.which("pyside6-rcc")
+                    if pyside6_rcc_path:
+                        subprocess.run(
+                            [pyside6_rcc_path, "-py3", qrc_file, "-o", py_file_pyside6],
+                            check=True,
+                        )
                     with open(py_file_pyside6, "a+") as f:
                         f.write(used_palette)
                 except FileNotFoundError:
