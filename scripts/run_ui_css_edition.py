@@ -5,9 +5,9 @@ Process qrc, ui, image, and screenshot files, then run example in while loop.
 """
 
 # Standard library imports
-from subprocess import call
 import os
 import sys
+import subprocess
 
 # Constants
 SCRIPTS_PATH = os.path.abspath(os.path.dirname(__file__))
@@ -34,26 +34,32 @@ def main():
 
         # Process images
         process_images = os.path.join(SCRIPTS_PATH, "process_images.py")
-        call(["python", process_images])
+        subprocess.run([sys.executable, process_images], check=True)
 
         # Process qrc files
         process_qrc = os.path.join(SCRIPTS_PATH, "process_qrc.py")
-        call(["python", process_qrc])
+        subprocess.run([sys.executable, process_qrc], check=True)
 
         # Process ui files
         process_ui = os.path.join(SCRIPTS_PATH, "process_ui.py")
-        call(["python", process_ui])
+        subprocess.run([sys.executable, process_ui], check=True)
 
         # Create screenshots
         example = os.path.join(REPO_PATH, "example", "example.py")
-        call(["python", example, "--screenshots"])
-        call(["python", example, "--no_dark", "--screenshots"])
+        subprocess.run([sys.executable, example, "--screenshots"], check=True)
+        subprocess.run(
+            [sys.executable, example, "--no_dark", "--screenshots"], check=True
+        )
 
         # Open dark example
-        dark = call(["python", example] + sys.argv[1:])
+        dark = subprocess.run(
+            [sys.executable, example] + sys.argv[1:], check=False
+        ).returncode
 
         # Open no dark example
-        no_dark = call(["python", example, "--no_dark"] + sys.argv[1:])
+        no_dark = subprocess.run(
+            [sys.executable, example, "--no_dark"] + sys.argv[1:], check=False
+        ).returncode
 
         if dark or no_dark:
             print("Unf! It not worked! Please, check the error(s).")
