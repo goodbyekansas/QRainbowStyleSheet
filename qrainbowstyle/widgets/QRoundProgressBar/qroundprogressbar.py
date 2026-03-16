@@ -72,14 +72,14 @@ class QRoundProgressBar(QWidget):
     # ENUMS ---------------------------------------------------------
 
     class BarStyle(Enum):
-        DONUT = (0,)
-        PIE = (1,)
-        LINE = (2,)
+        DONUT = 0
+        PIE = 1
+        LINE = 2
         EXPAND = 3
 
     class UpdateFlags(Enum):
-        VALUE = (0,)
-        PERCENT = (1,)
+        VALUE = 0
+        PERCENT = 1
         MAX = 2
 
     # GETTERS -------------------------------------------------------
