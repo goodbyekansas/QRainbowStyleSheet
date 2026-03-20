@@ -58,20 +58,14 @@ class Painter(QWidget):
 class _PaletteButton(QPushButton):
     def __init__(self, color):
         super().__init__()
-        side = 128
+        side = 24
         self.setFixedSize(QSize(side, side))
         self.color = color
+        self.setToolTip(self.color["name"])
 
-        self.setIcon(QIcon(Painter().paintPixmap(side, self.color[1], self.color[2])))
-        stylesheet = """
-        min-width: 24px;
-        max-width: 24px;
-        min-height: 24px;
-        max-height: 24px;
-        padding: 0px;
-        border: none;
-        """
-        self.setIconSize(QSize(24, 24))
+        self.setIcon(QIcon(Painter().paintPixmap(128, self.color[1], self.color[2])))
+        stylesheet = "padding: 0px; border: none;"
+        self.setIconSize(QSize(side, side))
         self.setStyleSheet(stylesheet)
 
 
@@ -119,7 +113,6 @@ class StylePickerGrid(QWidget):
 
     def __init__(self, n_columns=5, parent=None):
         super(StylePickerGrid, self).__init__(parent)
-        self.setMaximumWidth(150)
         colors = []
 
         for style in qrainbowstyle.getAvailablePalettes():
