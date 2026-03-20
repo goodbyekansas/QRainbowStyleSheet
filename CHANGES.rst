@@ -1,7 +1,9 @@
 Changelog
 =========
-
 - Unreleased
+    -
+
+- 0.9.9
     - Fix size and tooltip for palette button in palette picker widgets
     - Add AIK and Djurgården palettes
     - Update to GBK palette to reduce contrast between colors
