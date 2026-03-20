@@ -1,6 +1,13 @@
 Changelog
 =========
 
+- Unreleased
+    - Fix size and tooltip for palette button in palette picker widgets
+    - Add AIK and Djurgården palettes
+    - Update to GBK palette to reduce contrast between colors
+    - Fix complex dependencies by replacing linting tools with ruff
+      and safety with pip audit
+
 - 0.9.8
     - Add new palettes: GBK
 
