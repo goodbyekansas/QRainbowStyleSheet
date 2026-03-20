@@ -203,11 +203,11 @@ class GBK(BasePalette):
     COLOR_TEXT_3 = "#bfbfbf"
     COLOR_TEXT_4 = "#a6a6a6"
 
-    COLOR_ACCENT_1 = "#a93e2b"
-    COLOR_ACCENT_2 = "#bf4833"
+    COLOR_ACCENT_1 = "#b04228"
+    COLOR_ACCENT_2 = "#c24a32"
     COLOR_ACCENT_3 = "#d5523c"
-    COLOR_ACCENT_4 = "#da6b57"
-    COLOR_ACCENT_5 = "#e08573"
+    COLOR_ACCENT_4 = "#e76c51"
+    COLOR_ACCENT_5 = "#f38d77"
 
     TITLE_BAR_BACKGROUND_COLOR = COLOR_ACCENT_3
     TITLE_BAR_BUTTONS_HOVER_COLOR = COLOR_ACCENT_4
@@ -351,3 +351,69 @@ class PWRLight(BasePalette):
     TITLE_BAR_TEXT_COLOR = Gray.B130
 
     OPACITY_TOOLTIP = 230
+
+
+class AIK(BasePalette):
+    """A refined, luxury AIK theme for professional interfaces."""
+
+    # Surfaces - The "Black Army" Base
+    COLOR_BACKGROUND_1 = "#121212"  # Deep Onyx (Navigation)
+    COLOR_BACKGROUND_2 = "#1A1A1B"  # Charcoal (Main Window)
+    COLOR_BACKGROUND_3 = "#242426"  # Graphite (Cards/Widgets)
+    COLOR_BACKGROUND_4 = "#333333"  # Border/Dividers
+    COLOR_BACKGROUND_5 = "#3D3D3E"  # Hovered Items
+    COLOR_BACKGROUND_6 = "#4d4d4d"
+
+    # Text - Softened for eye comfort
+    COLOR_TEXT_1 = "#EFEAE0"  # Pearl (Primary Text)
+    COLOR_TEXT_2 = "#C7C4BD"  # Silver-Gray (Secondary Text)
+    COLOR_TEXT_3 = "#8C8A84"  # Muted Gray
+    COLOR_TEXT_4 = "#79766e"
+
+    # Accents - The "Gold Standard"
+    COLOR_ACCENT_1 = "#8C7343"  # Deep Gold (Success/Active Toggle)
+    COLOR_ACCENT_2 = "#A0895B"  # Burnished Gold (Primary Buttons)
+    COLOR_ACCENT_3 = "#FFD200"  # Bright Yellow (Critical Alerts Only)
+    COLOR_ACCENT_4 = "#ffda33"
+    COLOR_ACCENT_5 = "#ffe166"
+
+    # UI Elements
+    TITLE_BAR_BACKGROUND_COLOR = "#0D0D0D"  # Darker than body for focus
+    TITLE_BAR_BUTTONS_HOVER_COLOR = "#FFD200"
+    TITLE_BAR_BUTTONS_DISABLED_COLOR = COLOR_ACCENT_1
+    TITLE_BAR_TEXT_COLOR = "#A0895B"  # Gold Title
+
+    OPACITY_TOOLTIP = 245
+
+
+class Djurgarden(BasePalette):
+    """A refined, professional Djurgården theme based on the 1891 colors."""
+
+    # Surfaces - Deep Navy Foundation
+    COLOR_BACKGROUND_1 = "#001A3D"  # Deepest Navy (Sidebar)
+    COLOR_BACKGROUND_2 = "#002557"  # Secondary Navy (Main BG)
+    COLOR_BACKGROUND_3 = "#003366"  # Slightly lighter navy (Cards/Panels)
+    COLOR_BACKGROUND_4 = "#004080"  # Hovered surfaces
+    COLOR_BACKGROUND_5 = "#7AB2E1"  # The "Stripe" Light Blue (Accents/Borders)
+    COLOR_BACKGROUND_6 = "#0E223F"  # Inactive/Muted surface
+
+    # Text - High Legibility
+    COLOR_TEXT_1 = "#FFFFFF"  # Primary White
+    COLOR_TEXT_2 = "#B0C4DE"  # Light Steel Blue (Secondary text, less eye strain)
+    COLOR_TEXT_3 = "#FFD200"  # Yellow for specific highlighted labels
+    COLOR_TEXT_4 = "#5C7691"  # Muted blue-gray for disabled text
+
+    # Accents - The "Crest" Palette
+    COLOR_ACCENT_1 = "#E31B23"  # The "D.I.F. Red" (Use for Active Tabs/Primary Buttons)
+    COLOR_ACCENT_2 = "#7AB2E1"  # Sky Blue (Secondary Buttons/Selection)
+    COLOR_ACCENT_3 = "#FFD200"  # Golden Yellow (Attention/Warnings/Highlights)
+    COLOR_ACCENT_4 = "#FFE166"  # Lighter yellow for hover
+    COLOR_ACCENT_5 = "#990000"  # Darker red for error states
+
+    # Title Bar - The "Gold" Frame influence
+    TITLE_BAR_BACKGROUND_COLOR = "#000E21"  # Very dark navy
+    TITLE_BAR_BUTTONS_HOVER_COLOR = "#FFD200"  # Yellow glow
+    TITLE_BAR_BUTTONS_DISABLED_COLOR = "#5C7691"
+    TITLE_BAR_TEXT_COLOR = "#FFFFFF"
+
+    OPACITY_TOOLTIP = 250

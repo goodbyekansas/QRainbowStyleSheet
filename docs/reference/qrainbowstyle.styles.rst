@@ -13,7 +13,9 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
+   qrainbowstyle.styles.AIK
    qrainbowstyle.styles.DarkOrange
+   qrainbowstyle.styles.Djurgarden
    qrainbowstyle.styles.GBK
    qrainbowstyle.styles.LightOrange
    qrainbowstyle.styles.Oceanic
